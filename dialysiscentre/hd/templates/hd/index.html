@@ -1,0 +1,27 @@
+
+{% extends 'hd/base.html' %}
+<ul>
+{% block content %} 
+	<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Dialysis Type</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for patient in all_patients %}
+  		<tr>
+	      <th scope="row">{{patient.PATIENTID}}</th>
+	      <td>{{patient.FIRSTNAME}}</td>
+	      <td>{{patient.LASTNAME}}</td>
+	      <td>{{patient.ADDRESS}}</td>
+	    </tr>
+		
+	{% endfor %}
+  </tbody>
+</table>
+	
+{% endblock %}
