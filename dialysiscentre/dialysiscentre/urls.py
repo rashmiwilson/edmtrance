@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
 
+admin.site.site_header = 'My project'                    # default: "Django Administration"
+admin.site.index_title = 'Features area'                 # default: "Site administration"
+admin.site.site_title = 'HTML title from adminsitration' # default: "Django site admin"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('hd.urls'))

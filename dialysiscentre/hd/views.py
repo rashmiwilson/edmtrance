@@ -26,7 +26,9 @@ def index(request):
 	# context :{
 	# 'all_patients':all_patients,
 	# }
-	return HttpResponse('Hi, this is where index will be.')
+	return render(request = request,
+                  template_name='hd/index.html',
+                  context = {})
 	
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
@@ -46,7 +48,7 @@ def query_result_1(request):
 
 
 	return render(request = request,
-                  template_name='hd/index.html',
+                  template_name='hd/query1.html',
                   context = {"all_patients":results})
 
 	

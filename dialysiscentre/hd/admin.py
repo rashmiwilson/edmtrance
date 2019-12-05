@@ -44,7 +44,24 @@ admin.site.register(DIALYZER_UNITS)
 admin.site.register(DIALYZER_MODELS)
 admin.site.register(MEDICINE_INVENTORY)
 admin.site.register(APPOINTMENTS)
-admin.site.register(PATIENTS)
+
+class PatientAdmin(admin.ModelAdmin):
+    # a list of displayed columns name.
+    readonly_fields = ('patientID',)
+
+    list_display = ['patientID', 'firstName', 'lastName']
+       # define search columns list, then a search box will be added at the top of Department list page.
+    search_fields = ['patientID', 'firstName', 'lastName']
+    
+    # define filter columns list, then a filter widget will be shown at right side of Department list page.
+ #   list_filter = ['patientID', 'firstName', 'lastName']
+    # define which field will be pre populated.
+  #  prepopulated_fields = {'patientID': ('patientID',)}
+
+    # define model data list ordering.
+   # ordering = ('patientID')
+
+admin.site.register(PATIENTS, PatientAdmin)
 admin.site.register(PRESCRIBED_DOSAGES)
 admin.site.register(STAFF)
 admin.site.register(ADMINS)

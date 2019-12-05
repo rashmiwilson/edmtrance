@@ -1,0 +1,44 @@
+
+{% extends 'hd/base.html' %}
+{% block content %} 
+<div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Todays Patient Appointments</h4>
+                                <p class="category">Here is a subtitle for this table</p>
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Dialysis Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for patient in all_patients %}
+      <tr>
+        <th scope="row">{{patient.PATIENTID}}</th>
+        <td>{{patient.FIRSTNAME}}</td>
+        <td>{{patient.LASTNAME}}</td>
+        <td>{{patient.ADDRESS}}</td>
+      </tr>
+    
+  {% endfor %}
+  </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    
+
+                </div>
+
+	
+{% endblock %}
