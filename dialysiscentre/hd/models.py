@@ -113,12 +113,13 @@ class APPOINTMENTS(models.Model):
     appointDate = models.DateField()
     appointTime = models.TimeField()
     mobilityType = models.CharField(max_length=100)
-    runNumber = models.IntegerField()
+#    runNumber = models.IntegerField()
     patient = models.ForeignKey(PATIENTS, on_delete=models.CASCADE)
     staff= models.ForeignKey(ADMINS, on_delete=models.CASCADE, null=True)
     clinic = models.ForeignKey(CLINICS, on_delete=models.CASCADE, null=True)
     createts = models.DateTimeField(auto_now_add=True)
     modifyts = models.DateTimeField(auto_now=True)
+    appointType = models.CharField(max_length=100)
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -142,25 +143,11 @@ class MACHINES(models.Model):
 
 
 
-class CONSULTATIONS(models.Model):
-    consultationID = models.IntegerField(primary_key=True)
-    consultDate = models.DateTimeField(auto_now=True)
-    patient = models.ForeignKey(PATIENTS, on_delete=models.CASCADE, null=True)
-    appoint = models.ForeignKey(APPOINTMENTS, on_delete=models.CASCADE, null=True)
-    status = models.BooleanField(null=True)  # 0 if patient misses the consultation appointment
-    comments = models.CharField(max_length=100, null=True)
-    createts = models.DateTimeField(auto_now_add=True)
-    modifyts = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
-       return u"%s" % self.name
-
-    class Meta:
-        verbose_name_plural = "consultations"
 
 class DOCTORS(models.Model):
     staff = models.ForeignKey(STAFF, on_delete=models.CASCADE, primary_key=True)
-    consult = models.ForeignKey(CONSULTATIONS, on_delete=models.CASCADE, null=True)
+  #  consult = models.ForeignKey(CONSULTATIONS, on_delete=models.CASCADE, null=True)
     degree = models.CharField(max_length=100, null=True)
     doctorType = models.CharField(max_length=100, null=True)
     onCall = models.BooleanField(null=True)
@@ -174,28 +161,22 @@ class DOCTORS(models.Model):
     def __unicode__(self):
         return u"%s" % self.name
 
-# class PRESCRIPTIONS(models.Model):
-#     prescriptionID = models.IntegerField(primary_key=True)
-#     bfr = models.IntegerField()
-#     dfr = models.IntegerField()
-#     bufferSetting = models.IntegerField()
-#     dialysateTemp = models.DecimalField(decimal_places = 2, max_digits = 6)
-#     doseOrdered = models.IntegerField()
-#     edw = models.DecimalField(decimal_places = 2, max_digits = 6)
-#     frequency = models.IntegerField()
-#     heparinBolus = models.IntegerField()
-#     instruction = models.CharField(max_length=100)
-#     lastGivenDate = models.DateTimeField()
-#     lastGivenDose = models.IntegerField()
-#     patient = models.ForeignKey(PATIENTS,on_delete=models.CASCADE)
-#     prescribedBy = models.ForeignKey(DOCTORS, on_delete=models.CASCADE)
-#     sodiumSetting = models.PositiveSmallIntegerField()
-#     strength = models.IntegerField()
-#     createts = models.DateTimeField(auto_now_add=True)
-#     modifyts = models.DateTimeField(auto_now=True)
-#     treatmentTime = models.DateTimeField()
-#     def __unicode__(self):
-#         return u"%s" % self.name
+class CONSULTATIONS(models.Model):
+    consultationID = models.IntegerField(primary_key=True)
+    consultDate = models.DateTimeField(auto_now=True)
+    patient = models.ForeignKey(PATIENTS, on_delete=models.CASCADE, null=True)
+    staff = models.ForeignKey(DOCTORS, on_delete=models.CASCADE)
+    appoint = models.ForeignKey(APPOINTMENTS, on_delete=models.CASCADE, null=True)
+    status = models.BooleanField(null=True)  # 0 if patient misses the consultation appointment
+    comments = models.CharField(max_length=100, null=True)
+    createts = models.DateTimeField(auto_now_add=True)
+    modifyts = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+       return u"%s" % self.name
+
+    class Meta:
+        verbose_name_plural = "consultations"
 
 
 class PRESCRIPTIONS(models.Model):
@@ -264,24 +245,25 @@ class HELPERS(models.Model):
 
 class TREATMENTS(models.Model):
    treatmentID = models.IntegerField(primary_key=True)
-   arterialAccess = models.CharField(max_length=100, null=True)
-   arterialPressure = models.DecimalField(decimal_places=2, max_digits=6, null=True)
-   dialyzate1 = models.CharField(max_length=100, null=True)
-   dialysisEndWeight = models.DecimalField(decimal_places=2, max_digits=6, null=True)
+   arterialAccess = models.CharField(max_length=100, null=True, blank=True)
+   arterialPressure = models.DecimalField(decimal_places=2, max_digits=6, null=True, blank=True)
+   dialyzate1 = models.CharField(max_length=100, null=True, blank=True)
+   dialysisEndWeight = models.DecimalField(decimal_places=2, max_digits=6, null=True, blank=True)
    #dialyzedBy = models.ForeignKey(HELPERS, on_delete=models.CASCADE)
-   duration = models.TimeField(null=True)
-   heparinUnitsActual = models.CharField(max_length=100, null=True)
-   type = models.CharField(max_length=100, null=True)  # if OutClinic or InClinic
-   orderedBloodflow = models.DecimalField(decimal_places=2, max_digits=6, null=True)
-   targetBloodprocessed = models.DecimalField(decimal_places=2, max_digits=6, null=True)
-   totalFluidRemoval = models.DecimalField(decimal_places=2, max_digits=6, null=True)
+   duration = models.TimeField(null=True, blank=True)
+   heparinUnitsActual = models.CharField(max_length=100, null=True, blank=True)
+   treatmentType = models.CharField(max_length=100)  # if OutClinic or InClinic
+   orderedBloodflow = models.DecimalField(decimal_places=2, max_digits=6, null=True, blank=True)
+   targetBloodprocessed = models.DecimalField(decimal_places=2, max_digits=6, null=True, blank=True)
+   totalFluidRemoval = models.DecimalField(decimal_places=2, max_digits=6, null=True, blank=True)
    treatmentDate = models.DateTimeField(null=True)
    treatmentStartby = models.ForeignKey(HELPERS, on_delete=models.CASCADE)
    treatmentStarttime = models.DateTimeField(null=True)
-   ufr = models.CharField(max_length=100, null=True)
-   venousAccess = models.CharField(max_length=100, null=True)
-   venousPressure = models.CharField(max_length=100, null=True)
+   ufr = models.CharField(max_length=100, null=True, blank=True)
+   venousAccess = models.CharField(max_length=100, null=True, blank=True)
+   venousPressure = models.CharField(max_length=100, null=True, blank=True)
    prescription = models.ForeignKey(PRESCRIPTIONS, on_delete=models.CASCADE)
+   machine = models.ForeignKey(MACHINES, on_delete=models.CASCADE, null=True, blank=True)
    createts = models.DateTimeField(auto_now_add=True)
    modifyts = models.DateTimeField(auto_now=True)
 
@@ -295,7 +277,7 @@ class MACHINE_VERIFICATIONS(models.Model):
     RORejectionActual = models.IntegerField(blank=True, null=True)
     dialysisFluidTemperature = models.CharField(max_length=100, null=True)
     machine = models.ForeignKey(MACHINES, on_delete=models.CASCADE)
-    staff = models.ForeignKey(CLINICS, on_delete=models.CASCADE)
+    staff = models.ForeignKey(TECHNICIANS, on_delete=models.CASCADE, null=True)
     treatment = models.ForeignKey(TREATMENTS, on_delete=models.CASCADE)
     createts = models.DateTimeField(auto_now_add=True)
     modifyts = models.DateTimeField(auto_now=True)
@@ -421,7 +403,7 @@ class NURSES(models.Model):
 
 
 class CARETAKERS(models.Model):
-   staff = models.ForeignKey(HELPERS, on_delete=models.CASCADE, primary_key=True)
+   staff = models.ForeignKey(STAFF, on_delete=models.CASCADE, primary_key=True)
    patient = models.ForeignKey(PATIENTS, on_delete=models.CASCADE)
    createts = models.DateTimeField(auto_now_add=True)
    modifyts = models.DateTimeField(auto_now=True)
@@ -448,7 +430,7 @@ class TRAINING_DETAILS(models.Model):
    trainingDetailsID = models.IntegerField(primary_key=True)
    training = models.ForeignKey(TRAININGS, on_delete=models.CASCADE)
    staff = models.ForeignKey(CARETAKERS, on_delete=models.CASCADE)
-   date = models.DateTimeField(null=True)
+   trainingDate = models.DateTimeField(null=True)
    duration = models.IntegerField(null=True)
    cost = models.IntegerField(null=True)
    createts = models.DateTimeField(auto_now_add=True)
@@ -537,7 +519,7 @@ class INCLINICS(models.Model):
    treatment = models.ForeignKey(TREATMENTS, on_delete=models.CASCADE, primary_key=True)
    clinic = models.ForeignKey(CLINICS, on_delete=models.CASCADE, null=True)
    appoint = models.ForeignKey(APPOINTMENTS, on_delete=models.CASCADE)
-   staff = models.ForeignKey(ADMINS, on_delete=models.CASCADE, null=True)
+   staff = models.ForeignKey(DOCTORS, on_delete=models.CASCADE, null=True)
    createts = models.DateTimeField(auto_now_add=True)
    modifyts = models.DateTimeField(auto_now=True)
 
@@ -550,7 +532,7 @@ class INCLINICS(models.Model):
 
 class OUTCLINICS(models.Model):
    treatment = models.ForeignKey(TREATMENTS, on_delete=models.CASCADE, primary_key=True)
-   machine = models.ForeignKey(CLINICS, on_delete=models.CASCADE)
+  # machine = models.ForeignKey(CLINICS, on_delete=models.CASCADE)
    createts = models.DateTimeField(auto_now_add=True)
    modifyts = models.DateTimeField(auto_now=True)
 

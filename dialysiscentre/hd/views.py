@@ -5,6 +5,21 @@ from .models import (PATIENTS)
 from django.db import connection
 from collections import namedtuple
 
+from django.views.generic import ListView
+from django.views.generic import DetailView
+
+
+#from .models import P
+
+
+class PatientListView(ListView):
+    queryset= PATIENTS.objects.all()
+    template_name = "hd/appoint.html"
+
+class PatientDetailView(DetailView):
+    model = PATIENTS
+    template_name = "hd/appoint_detail.html"
+
 def namedtuplefetchall(cursor):
     "Return all rows from a cursor as a namedtuple"
     desc = cursor.description
