@@ -23,5 +23,6 @@ admin.site.site_title = 'HTML title from adminsitration' # default: "Django site
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', include('hd.urls'))
 ]

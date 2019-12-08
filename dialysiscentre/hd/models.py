@@ -87,11 +87,11 @@ class PATIENTS(models.Model):
     class Meta:
         verbose_name_plural = "patients"
 
-    # def __str__(self):
-    #     return self.patientID
-
+    def __str__(self):
+           return self.firstName + " " +self.lastName + "("+str(self.patientID)+")"
+        
     def __unicode__(self):
-        return self.patientID
+           return self.firstName + " " +self.lastName + "("+str(self.patientID)+")"
 
 class ADMINS(models.Model):
     # officeStartTime = models.TimeField()
@@ -250,7 +250,7 @@ class TREATMENTS(models.Model):
    dialyzate1 = models.CharField(max_length=100, null=True, blank=True)
    dialysisEndWeight = models.DecimalField(decimal_places=2, max_digits=6, null=True, blank=True)
    #dialyzedBy = models.ForeignKey(HELPERS, on_delete=models.CASCADE)
-   duration = models.TimeField(null=True, blank=True)
+   treatmentDuration = models.IntegerField(null=True)
    heparinUnitsActual = models.CharField(max_length=100, null=True, blank=True)
    treatmentType = models.CharField(max_length=100)  # if OutClinic or InClinic
    orderedBloodflow = models.DecimalField(decimal_places=2, max_digits=6, null=True, blank=True)
@@ -261,7 +261,8 @@ class TREATMENTS(models.Model):
    treatmentStarttime = models.DateTimeField(null=True)
    ufr = models.CharField(max_length=100, null=True, blank=True)
    venousAccess = models.CharField(max_length=100, null=True, blank=True)
-   venousPressure = models.CharField(max_length=100, null=True, blank=True)
+   #venousPressure =  models.DecimalField(decimal_places=2, max_digits=6,max_length=100, null=True, blank=True)
+   venousPressure =  models.DecimalField(decimal_places=2, max_digits=6,max_length=100, null=True, blank=True)
    prescription = models.ForeignKey(PRESCRIPTIONS, on_delete=models.CASCADE)
    machine = models.ForeignKey(MACHINES, on_delete=models.CASCADE, null=True, blank=True)
    createts = models.DateTimeField(auto_now_add=True)
@@ -541,3 +542,18 @@ class OUTCLINICS(models.Model):
 
    class Meta:
        verbose_name_plural = "Out-Clinic Treatments"
+
+
+class AppointmentsToday(models.Model):
+    id = models.IntegerField(primary_key=True)
+    appointDate = models.DateField()
+    patient = models.ForeignKey(PATIENTS, on_delete=models.DO_NOTHING)
+    staff= models.ForeignKey(DOCTORS, on_delete=models.DO_NOTHING)
+
+
+    class Meta:
+        managed = False
+        db_table = "appoint_today"
+
+class DummyTable(models.Model):
+    id = models.IntegerField(primary_key=True)

@@ -1,14 +1,16 @@
+
 {% extends 'hd/base.html' %}
+{% load static %}
 {% block content %} 
 
-<div class="row">
+<!-- <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
                                 <h4 class="title">Todays Patient Appointments</h4>
                                 <p class="category">Here is a subtitle for this table</p>
-                                <p> {{ patients.firstName }}</p>
-                                <p> {{ patients.lastName }}</p>
+                                <p>First Name : {{ patients.firstName }}</p>
+                                <p> Last Name : {{ patients.lastName }}</p>
                             </div>
                            
                         </div>
@@ -17,6 +19,138 @@
 
                     
 
+                </div> -->
+
+    <div class="container emp-profile">
+            <form method="post">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="profile-img">
+                            <img src="{% static 'assets/img/default-avatar.png' %}" alt="" class="img-thumbnail"/>
+                           <!--  <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="file"/>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="profile-head">
+                                    <h5>
+                                        {{ patients.firstName }} {{ patients.lastName }}
+                                    </h5>
+                                    <h6>
+                                        Web Developer and Designer
+                                    </h6>
+                                    <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
+                    </div>
                 </div>
+                <div class="row">
+                  <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#about">Appointment</a></li>
+                <li><a data-toggle="tab" href="#prescription">Presciption </a></li>
+                <li><a data-toggle="tab" href="#settings">Menu 2</a></li>
+              </ul>
+             
+                         <div class="tab-content">
+                              <div class="tab-pane active" id="about">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>User Id</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Kshiti123</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Kshiti Ghelani</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>kshitighelani@gmail.com</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Phone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>123 456 7890</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Profession</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Web Developer and Designer</p>
+                                            </div>
+                                        </div>
+                            </div>
+                             <div class="tab-pane" id="prescription">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Experience</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Expert</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Hourly Rate</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>10$/hr</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Total Projects</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>230</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>English Level</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Expert</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Availability</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>6 months</p>
+                                            </div>
+                                        </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Your Bio</label><br/>
+                                        <p>Your detail description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+            </form>           
+        </div>
 
 {% endblock %}

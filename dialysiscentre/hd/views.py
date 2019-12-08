@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from .models import (PATIENTS)
+from .models import AppointmentsToday
 from django.db import connection
 from collections import namedtuple
 
@@ -12,12 +12,12 @@ from django.views.generic import DetailView
 #from .models import P
 
 
-class PatientListView(ListView):
-    queryset= PATIENTS.objects.all()
+class AppointmentListView(ListView):
+    queryset= AppointmentsToday.objects.all()
     template_name = "hd/appoint.html"
 
-class PatientDetailView(DetailView):
-    model = PATIENTS
+class AppointmentDetailView(DetailView):
+    model = AppointmentsToday
     template_name = "hd/appoint_detail.html"
 
 def namedtuplefetchall(cursor):

@@ -19,13 +19,13 @@
     </tr>
   </thead>
   <tbody>
-    {% for patient in object_list %}
+    {% for appoint in object_list %}
       <tr>
-        <th scope="row"> <a href="/appoint_detail/{{patient.patientID}}">{{patient.patientID}}</a></th>
-        <td>{{patient.firstName}}</td>
-        <td>{{patient.lastName}}</td>
-        <td>{{patient.address}}</td>
-      </tr>
+         <th scope="row"> <a href="/appoint_detail/{{appoint.id}}">{{appoint.id}}</a></th>
+        <td>{{appoint.patient.firstName}}</td>
+        <td>{{appoint.patient.lastName}}</td>
+        <td>{{appoint.patient}}</td>
+      </tr> 
     
   {% endfor %}
   </tbody>
