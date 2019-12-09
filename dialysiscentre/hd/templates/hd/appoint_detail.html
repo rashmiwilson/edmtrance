@@ -36,12 +36,15 @@
                     <div class="col-md-8">
                         <div class="profile-head">
                                     <h5>
-                                        {{ patients.firstName }} {{ patients.lastName }}
+                                         {{ appointmentstoday.id }}
+                                    </h5>
+                                    <h5>
+                                         {{ appointmentstoday.appointDate }}
                                     </h5>
                                     <h6>
-                                        Web Developer and Designer
+                                       {{ appointmentstoday.patient }}
                                     </h6>
-                                    <p class="proile-rating">RANKINGS : <span>8/10</span></p>
+                                    <p class="proile-rating">{{ appointmentstoday.staff }}</p>
                             
                         </div>
                     </div>
@@ -53,38 +56,38 @@
                   <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#about">Appointment</a></li>
                 <li><a data-toggle="tab" href="#prescription">Presciption </a></li>
-                <li><a data-toggle="tab" href="#settings">Menu 2</a></li>
+                <li><a data-toggle="tab" href="#settings">Notes</a></li>
               </ul>
              
                          <div class="tab-content">
                               <div class="tab-pane active" id="about">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>User Id</label>
+                                                <label>Patient</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Kshiti123</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Name</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Kshiti Ghelani</p>
+                                                <p>{{ appointmentstoday.patient }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Email</label>
+                                                <label>Appointment Time</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>kshitighelani@gmail.com</p>
+                                                <p></p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Phone</label>
+                                                <label>Appointment Date</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ appointmentstoday.appointDate }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Patient Phone</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p>123 456 7890</p>
@@ -92,10 +95,10 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Profession</label>
+                                                <label>Doctor</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Web Developer and Designer</p>
+                                                <p>{{ appointmentstoday.staff }}</p>
                                             </div>
                                         </div>
                             </div>

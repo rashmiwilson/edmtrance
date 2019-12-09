@@ -4,11 +4,12 @@ from django.template import loader
 from .models import AppointmentsToday
 from django.db import connection
 from collections import namedtuple
+from .models import TREATMENTS
 
 from django.views.generic import ListView
 from django.views.generic import DetailView
 
-
+import json
 #from .models import P
 
 
@@ -21,9 +22,9 @@ class AppointmentDetailView(DetailView):
     template_name = "hd/appoint_detail.html"
 
 def namedtuplefetchall(cursor):
-    "Return all rows from a cursor as a namedtuple"
+    print("Return all rows from a cursor as a namedtuple")
     desc = cursor.description
-    nt_result = namedtuple('PATIENTS', [col[0] for col in desc])
+    nt_result = namedtuple('TREATMENT_STATS', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
 
 def my_custom_sql():
@@ -66,4 +67,42 @@ def query_result_1(request):
                   template_name='hd/query1.html',
                   context = {"all_patients":results})
 
-	
+def treatments_custom_sql():
+    with connection.cursor() as cursor:
+    #    cursor.execute("UPDATE bar SET foo = 1 WHERE baz = %s", [self.baz])
+        cursor.execute("select * from TREATMENT_STATS")
+        return namedtuplefetchall(cursor)
+        #row = cursor.fetchone()
+
+def treatments_by_month_view(request):
+	result_treatments = treatments_custom_sql()
+	print("BBBBB")
+	print(result_treatments)
+	yearandMonth = list()
+	NoofTreatments = list()
+	LastmonthsTreatments = list()
+	NextMonthsTreatments = list()
+	ytd=list()
+
+	for row in result_treatments:
+	    print(row)
+	    yearandMonth.append(row.YearandMonth)
+	    NoofTreatments.append(row.Treatments)
+	  #  LastmonthsTreatments.append(row.LastMonthsTreatments)
+	  #  NextMonthsTreatments.append(row.NextMonthsTreatments)
+	    ytd.append(row.YTDTreatments)
+	  
+	NoofTreatments_series = {'name': 'No of Treatments','data': NoofTreatments,'color': 'purple'}
+
+	LastmonthsTreatments_series = {'name': 'Last months treatments','data': LastmonthsTreatments,'color': 'red'}
+	NextMonthsTreatments_series = {'name': 'Next months treatments','data': NextMonthsTreatments,'color': 'blue'}
+	YTD_series = {'name': 'Year To Date','data': ytd,'color': 'blue'}
+	chart = {
+			'chart': {'type': 'column'},
+			'title': {'text': 'Treatment statistics'},
+			'xAxis': {'categories': yearandMonth},
+			'series': [NoofTreatments_series,YTD_series]}
+	dump = json.dumps(chart)
+	print("AAAAAAAAA")
+	print(dump)
+	return render(request, 'hd/index.html', {'chart': dump})	

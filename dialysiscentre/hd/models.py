@@ -158,8 +158,9 @@ class DOCTORS(models.Model):
     class Meta:
         verbose_name_plural = "doctors"
 
-    def __unicode__(self):
-        return u"%s" % self.name
+    def __str__(self):
+           return self.staff.firstName + " " +self.staff.lastName + "("+str(self.staff.staffID)+")"
+        
 
 class CONSULTATIONS(models.Model):
     consultationID = models.IntegerField(primary_key=True)
