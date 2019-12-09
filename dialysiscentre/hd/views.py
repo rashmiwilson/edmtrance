@@ -103,6 +103,42 @@ def treatments_by_month_view(request):
 			'xAxis': {'categories': yearandMonth},
 			'series': [NoofTreatments_series,YTD_series]}
 	dump = json.dumps(chart)
-	print("AAAAAAAAA")
 	print(dump)
 	return render(request, 'hd/index.html', {'chart': dump})	
+
+#this function is for fetching the availability of the staff from a view.
+def staff_available_custom_sql():
+  with connection.cursor() as cursor:
+      cursor.execute("select * from STAFF_AVAILABLE")
+      return namedtuplefetchall(cursor)
+
+#this function gives the structure for the graph
+def staff_available_view(request):
+  result_availability = staff_available_custom_sql()
+  print("staff_available_view")
+  print(result_availability)
+  NoofTechnicians = list()
+  NoofDoctors = list()
+  NoofNursesAvailable = list()
+  NoofMachinesAvailable = list()
+  categoriesOfStaff = list('Doctors', 'Nurses', 'Technicians', 'Machines')
+  
+  for row in result_availability:
+      print(row)
+      NoofDoctors=row.OnCallDoctorsAvailable
+      NoofNursesAvailable=row.NumberOfNursesAvailable
+      NoofMachinesAvailable= row.NumberofMachinesAvailable
+      NoofTechnicians = row.NoofTechnicianAvailable
+    
+  Available_Doctors_series = {'name': 'Doctors','data': NoofDoctors,'color': 'purple'}
+  Available_Nurses_series = {'name': 'Nurses','data': NoofNursesAvailable,'color': 'green'}
+  Available_Technicians_series = {'name': 'Technicians','data': NoofTechnicianAvailable,'color': 'red'}
+  Available_Machine_series = {'name': 'No. of Machines','data': NoofMachinesAvailable,'color': 'blue'}  YTD_series = {'name': 'Year To Date','data': ytd,'color': 'blue'}
+  chart = {
+      'chart': {'type': 'column'},
+      'title': {'text': 'Staff Availability'},
+      'xAxis': {'categories': 'categoriesOfStaff'},
+      'series': [Available_Doctors_series,Available_Nurses_series,Available_Technicians_series,Available_Machine_series]}
+  dump_staff = json.dumps(chart)
+  print(dump_staff)
+  return render(request, 'hd/index.html', {'chart': dump_staff})
