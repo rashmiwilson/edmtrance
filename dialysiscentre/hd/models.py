@@ -21,7 +21,8 @@ class CLINICS(models.Model):
 
    def __unicode__(self):
        return u"%s" % self.name
-
+   def __str__(self):
+           return self.clinicName
     
 class STAFF(models.Model):
     staffID = models.IntegerField(primary_key=True)
@@ -386,9 +387,6 @@ class PRE_POST(models.Model):
         unique_together = (('treatment', 'vitalFlag'))
 
 
-
-
-
 class NURSES(models.Model):
    degree = models.CharField(max_length=100, null=True)
    seniority = models.CharField(max_length=100, null=True)
@@ -403,6 +401,8 @@ class NURSES(models.Model):
    class Meta:
         verbose_name_plural = "Nurses"
 
+   def __str__(self):
+           return self.staff.firstName + " " +self.staff.lastName + "("+str(self.staff.staffID)+")"
 
 class CARETAKERS(models.Model):
    staff = models.ForeignKey(STAFF, on_delete=models.CASCADE, primary_key=True)
@@ -414,6 +414,8 @@ class CARETAKERS(models.Model):
        return u"%s" % self.name
    class Meta:
         verbose_name_plural = "Caretakers"
+   def __str__(self):
+           return self.staff.firstName + " " +self.staff.lastName + "("+str(self.staff.staffID)+")"
 
 class TRAININGS(models.Model):
    trainingID = models.IntegerField(primary_key=True)
@@ -530,7 +532,8 @@ class INCLINICS(models.Model):
 
    class Meta:
        verbose_name_plural = "In-Clinic Treatments"
-
+   def __str__(self):
+           return self.clinic.clinicName + "("+str(self.clinic.clinicID)+")"
 
 class OUTCLINICS(models.Model):
    treatment = models.ForeignKey(TREATMENTS, on_delete=models.CASCADE, primary_key=True)
