@@ -48,7 +48,7 @@ class AppointmentAdmin(admin.ModelAdmin):
 
     list_display = ['appointID', 'appointDate', 'appointTime', 'patient','staff']
        # define search columns list, then a search box will be added at the top of Department list page.
-    search_fields = ['appointID','patient']
+    search_fields = ['appointID', 'appointDate', 'appointTime',]
 
 admin.site.register(MACHINE_VERIFICATIONS)
 admin.site.register(TREATMENTS)
