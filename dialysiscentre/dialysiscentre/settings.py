@@ -138,3 +138,5 @@ LOGIN_REDIRECT_URL = '/'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
