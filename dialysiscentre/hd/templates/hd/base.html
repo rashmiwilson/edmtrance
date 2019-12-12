@@ -32,6 +32,7 @@
 <body>
 
 <div class="wrapper">
+  {% if user.is_authenticated %}
     <div class="sidebar" data-color="purple" data-image="{% static 'assets/img/sidebar-5.jpg' %}">
 
     <!--
@@ -57,14 +58,20 @@
                   </li>
                   <li>
                     <a href="/appoint">
-                        <i class="pe-7s-graph"></i>
-                        <p>Today Appointments</p>
+                        <i class="pe-7s-note2"></i>
+                        <p>Treatments Today</p>
                     </a>
                 </li>
                 <li>
                     <a href="/query1">
-                        <i class="pe-7s-graph"></i>
-                        <p>Patients History</p>
+                        <i class="pe-7s-users"></i>
+                        <p>All Patients</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/user">
+                        <i class="pe-7s-user"></i>
+                        <p>User Profile</p>
                     </a>
                 </li>
 
@@ -95,8 +102,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                           <a href="">
-                               Account
+                           <a href="/accounts/logout">
+                               Logout
                             </a>
                         </li>
                     </ul>
@@ -128,14 +135,18 @@
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                    &copy; <script>document.write(new Date().getFullYear())</script> MIS 531, University of Arizona
                 </p>
             </div>
         </footer>
+        {% else %}
+          <p><a href="/accounts/login">
+                                Login Here
+                            </a></p>
+{% endif  %}
 
     </div>
 </div>
-
 
 </body>
 
@@ -158,21 +169,6 @@
   <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
   <script src="{% static 'assets/js/demo.js' %}"></script>
 
-  <script type="text/javascript">
-      $(document).ready(function(){
-
-       
-
-          $.notify({
-              icon: 'pe-7s-gift',
-              message: "Welcome to Santa Fe Dialysis Centre"
-
-            },{
-                type: 'info',
-                timer: 4000
-            });
-
-      });
-  </script>
+  
 
 </html>

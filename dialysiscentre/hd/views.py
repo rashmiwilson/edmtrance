@@ -37,14 +37,11 @@ def my_custom_sql():
    # return row
 # Create your views here.
 def index(request):
-	# all_patients  = PATIENTS.objects.all()
-	# template = loader.get_template('hd/index.html')
-	# context :{
-	# 'all_patients':all_patients,
-	# }
-	return render(request = request,
-                  template_name='hd/index.html',
-                  context = {})
+	
+	#if request.user.is_authenticated:
+		return treatments_by_month_view(request)
+#	else:
+#		return render(request = request,template_name='registration/login.html',context = {})
 	
 def dictfetchall(cursor):
     "Return all rows from a cursor as a dict"
@@ -75,9 +72,10 @@ def treatments_custom_sql():
         #row = cursor.fetchone()
 
 def treatments_by_month_view(request):
+	dump2 = staff_available_view(request)
 	result_treatments = treatments_custom_sql()
-	print("BBBBB")
-	print(result_treatments)
+	#print("BBBBB")
+	#print(result_treatments)
 	yearandMonth = list()
 	NoofTreatments = list()
 	LastmonthsTreatments = list()
@@ -92,19 +90,20 @@ def treatments_by_month_view(request):
 	  #  NextMonthsTreatments.append(row.NextMonthsTreatments)
 	    ytd.append(row.YTDTreatments)
 	  
-	NoofTreatments_series = {'name': 'No of Treatments','data': NoofTreatments,'color': 'purple'}
+	NoofTreatments_series = {'name': 'No of Treatments','data': NoofTreatments,'color': '#a7b8fd'}
 
 	LastmonthsTreatments_series = {'name': 'Last months treatments','data': LastmonthsTreatments,'color': 'red'}
-	NextMonthsTreatments_series = {'name': 'Next months treatments','data': NextMonthsTreatments,'color': 'blue'}
-	YTD_series = {'name': 'Year To Date','data': ytd,'color': 'blue'}
+	NextMonthsTreatments_series = {'name': 'Next months treatments','data': NextMonthsTreatments,'color': '#a7e3fd'}
+	YTD_series = {'name': 'Year To Date','data': ytd,'color': '#c1a7fd'}
 	chart = {
 			'chart': {'type': 'column'},
 			'title': {'text': 'Treatment statistics'},
 			'xAxis': {'categories': yearandMonth},
 			'series': [NoofTreatments_series,YTD_series]}
 	dump = json.dumps(chart)
+	print('2222')
 	print(dump)
-	return render(request, 'hd/index.html', {'chart': dump})	
+	return render(request, 'hd/index.html', {'chart1': dump, 'chart2' : dump2})	
 
 #this function is for fetching the availability of the staff from a view.
 def staff_available_custom_sql():
@@ -115,30 +114,41 @@ def staff_available_custom_sql():
 #this function gives the structure for the graph
 def staff_available_view(request):
   result_availability = staff_available_custom_sql()
-  print("staff_available_view")
-  print(result_availability)
+  #print("staff_available_view")
+  #print(result_availability)
   NoofTechnicians = list()
   NoofDoctors = list()
   NoofNursesAvailable = list()
   NoofMachinesAvailable = list()
-  categoriesOfStaff = list('Doctors', 'Nurses', 'Technicians', 'Machines')
-  
+  categoriesOfStaff = list()
+  categoriesOfStaff.append('Doctors')
+  categoriesOfStaff.append('Nurses')
+  categoriesOfStaff.append('Technicians')
+  categoriesOfStaff.append('Machines')
+  print(categoriesOfStaff)
   for row in result_availability:
-      print(row)
-      NoofDoctors=row.OnCallDoctorsAvailable
-      NoofNursesAvailable=row.NumberOfNursesAvailable
-      NoofMachinesAvailable= row.NumberofMachinesAvailable
-      NoofTechnicians = row.NoofTechnicianAvailable
+     # print(row)
+      NoofDoctors.append(row.OnCallDoctorsAvailable)
+      NoofNursesAvailable.append(row.NumberOfNursesAvailable)
+      NoofMachinesAvailable.append(row.NumberofMachinesAvailable)
+      NoofTechnicians.append(row.NoofTechnicianAvailable)
     
-  Available_Doctors_series = {'name': 'Doctors','data': NoofDoctors,'color': 'purple'}
-  Available_Nurses_series = {'name': 'Nurses','data': NoofNursesAvailable,'color': 'green'}
-  Available_Technicians_series = {'name': 'Technicians','data': NoofTechnicianAvailable,'color': 'red'}
-  Available_Machine_series = {'name': 'No. of Machines','data': NoofMachinesAvailable,'color': 'blue'}  YTD_series = {'name': 'Year To Date','data': ytd,'color': 'blue'}
+  Available_Doctors_series = {'name': 'Doctors','data': NoofDoctors,'color': '#a7fdec'}
+  Available_Nurses_series = {'name': 'Nurses','data': NoofNursesAvailable,'color': '#a7b8fd'}
+  Available_Technicians_series = {'name': 'Technicians','data': NoofTechnicians,'color': '#fda7b8'}
+  Available_Machine_series = {'name': 'No. of Machines','data': NoofMachinesAvailable,'color': '#fdeca7'}  
   chart = {
       'chart': {'type': 'column'},
-      'title': {'text': 'Staff Availability'},
-      'xAxis': {'categories': 'categoriesOfStaff'},
+      'title': {'text': 'Resources Availability'},
+      'xAxis': {'categories': categoriesOfStaff},
       'series': [Available_Doctors_series,Available_Nurses_series,Available_Technicians_series,Available_Machine_series]}
   dump_staff = json.dumps(chart)
+  print('11111')
   print(dump_staff)
-  return render(request, 'hd/index.html', {'chart': dump_staff})
+  return dump_staff
+  #return render(request, 'hd/index.html', {'chart': dump_staff})
+
+
+def user_profile(request):
+  return render(request = request,template_name='hd/user.html')
+  

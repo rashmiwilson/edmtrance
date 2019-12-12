@@ -1,0 +1,42 @@
+{% extends 'hd/base.html' %}
+{% block content %} 
+<div class = "row">
+<div class="card" >
+  <div class="content">
+    <div class="header">
+                                <h4 class="title">User Profile Information</h4>
+                               <!--  <p class="category">Last Campaign Performance</p> -->
+                            </div>
+                                        <div class="row">
+                                    <h1></h1>
+                                </div>
+                                    <div class="row">
+                                            <div class="col-md-2">
+                                                <label> First Name</label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <p>{{ user.first_name}}</p>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Last Name</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>{{ user.last_name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Email Address</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <p>{{user.email}}</p>
+                                            </div>
+                                        </div>
+                                        
+                                     </div>   
+                            </div>
+</div>
+{% endblock %}

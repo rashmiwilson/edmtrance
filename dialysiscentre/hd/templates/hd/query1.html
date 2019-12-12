@@ -5,8 +5,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Todays Patient Appointments</h4>
-                                <p class="category">Here is a subtitle for this table</p>
+                                <h4 class="title">All Patient Information</h4>
+                               <!--  <p class="category">Here is a subtitle for this table</p> -->
                             </div>
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-hover table-striped">
@@ -15,7 +15,8 @@
       <th scope="col">#</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
-      <th scope="col">Dialysis Type</th>
+      <th scope="col">Phone No</th>
+      <th scope="col">Address</th>
     </tr>
   </thead>
   <tbody>
@@ -24,6 +25,7 @@
         <th scope="row">{{patient.PATIENTID}}</th>
         <td>{{patient.FIRSTNAME}}</td>
         <td>{{patient.LASTNAME}}</td>
+        <td>{{patient.PHONENO}}</td>
         <td>{{patient.ADDRESS}}</td>
       </tr>
     

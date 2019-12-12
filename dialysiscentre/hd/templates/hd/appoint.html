@@ -5,14 +5,15 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Todays Patient Appointments</h4>
-                                <p class="category">Here is a subtitle for this table</p>
+                                <h4 class="title">Treatment Sessions Today</h4>
+                               <!--  <p class="category">Here is a subtitle for this table</p> -->
                             </div>
                             <div class="content table-responsive table-full-width">
                                 <table class="table table-hover table-striped">
                                     <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Time</th>
       <th scope="col">First</th>
       <th scope="col">Last</th>
       <th scope="col">Dialysis Type</th>
@@ -22,9 +23,10 @@
     {% for appoint in object_list %}
       <tr>
          <th scope="row"> <a href="/appoint_detail/{{appoint.id}}">{{appoint.id}}</a></th>
-        <td>{{appoint.patient.firstName}}</td>
-        <td>{{appoint.patient.lastName}}</td>
-        <td>{{appoint.patient}}</td>
+         <td>{{appoint.appointTime}}</td>
+        <td>{{appoint.firstName}}</td>
+        <td>{{appoint.lastName}}</td>
+        <td>{{appoint.dialysisType}}</td>
       </tr> 
     
   {% endfor %}

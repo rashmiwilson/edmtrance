@@ -107,6 +107,9 @@ class ADMINS(models.Model):
 
     class Meta:
         verbose_name_plural = "administrators"
+    def __str__(self):
+           return self.staffID.firstName + " " +self.staffID.lastName + "("+str(self.staffID.staffID)+")"
+
 
 
 class APPOINTMENTS(models.Model):
@@ -121,6 +124,7 @@ class APPOINTMENTS(models.Model):
     createts = models.DateTimeField(auto_now_add=True)
     modifyts = models.DateTimeField(auto_now=True)
     appointType = models.CharField(max_length=100)
+
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -139,9 +143,8 @@ class MACHINES(models.Model):
     class Meta:
         verbose_name_plural = "machines"
 
-    def __unicode__(self):
-        return u"%s" % self.name
-
+    def __str__(self):
+           return "MACHINE:" +str(self.machineID)
 
 
 
@@ -204,8 +207,8 @@ class PRESCRIPTIONS(models.Model):
    # treatmentTime = models.DateTimeField(default=timezone.now)
    treatmentTime = models.DateTimeField(null=True)
 
-   def __unicode__(self):
-       return u"%s" % self.name
+   def __str__(self):
+           return "PRESCRIPTION:" +str(self.prescriptionID)
    class Meta:
         verbose_name_plural = "prescriptions" 
 
@@ -217,8 +220,8 @@ class HELPERS(models.Model):
 
     class Meta:
         verbose_name_plural = "helpers"
-    def __unicode__(self):
-        return u"%s" % self.name
+    def __str__(self):
+           return self.staff.firstName + " " +self.staff.lastName + "("+str(self.staff.staffID)+")"
 
 # class TREATMENTS(models.Model):
 #     treatmentID = models.IntegerField(primary_key=True)
@@ -274,6 +277,10 @@ class TREATMENTS(models.Model):
        return u"%s" % self.name
    class Meta:
         verbose_name_plural = "Treatment Sessions"
+
+   def __str__(self):
+           return str(self.treatmentID)
+        
 
 class MACHINE_VERIFICATIONS(models.Model):
     machineVerificationID= models.IntegerField(primary_key=True)
@@ -551,8 +558,29 @@ class OUTCLINICS(models.Model):
 class AppointmentsToday(models.Model):
     id = models.IntegerField(primary_key=True)
     appointDate = models.DateField()
-    patient = models.ForeignKey(PATIENTS, on_delete=models.DO_NOTHING)
+    patientid = models.IntegerField()
     staff= models.ForeignKey(DOCTORS, on_delete=models.DO_NOTHING)
+    clinicName = models.CharField(max_length=100, null=True)
+    firstName = models.CharField(max_length=100, null=True)
+    lastName = models.CharField(max_length=100, null=True)
+    dob = models.DateField(null=True)
+    phoneNo = models.IntegerField(null=True)
+    #address = models.CharField(max_length=100, null=True)
+    gender = models.CharField(max_length=10, null=True)
+    dialysisType = models.CharField(max_length=100, null=True)
+    bfr = models.IntegerField(null=True)
+    dfr = models.IntegerField(null=True)
+    bufferSetting = models.IntegerField(null=True)
+    dialysateTemp = models.DecimalField(decimal_places=2, max_digits=6, null=True)
+    doseOrdered = models.IntegerField(null=True)
+    #edw = models.DecimalField(decimal_places=2, max_digits=6, null=True)
+    #frequency = models.IntegerField(null=True)
+    heparinBolus = models.IntegerField(null=True)
+    #instruction = models.CharField(max_length=100, null=True)
+    # lastGivenDate = models.DateTimeField(default=timezone.now)
+    lastGivenDate = models.DateTimeField(null=True)
+    appointDate = models.DateField()
+    appointTime = models.TimeField()
 
 
     class Meta:

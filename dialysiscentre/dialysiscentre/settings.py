@@ -136,6 +136,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 # my_project/settings.py
 LOGIN_REDIRECT_URL = '/'
 
+LOGOUT_REDIRECT_URL = '/'
+
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 

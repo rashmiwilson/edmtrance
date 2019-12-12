@@ -50,8 +50,16 @@ class AppointmentAdmin(admin.ModelAdmin):
        # define search columns list, then a search box will be added at the top of Department list page.
     search_fields = ['appointID', 'appointDate', 'appointTime',]
 
+class TreatmentAdmin(admin.ModelAdmin):
+    # a list of displayed columns name.
+    readonly_fields = ('treatmentID',)
+
+    list_display = ['treatmentID', 'treatmentDate', 'treatmentStarttime','treatmentType']
+       # define search columns list, then a search box will be added at the top of Department list page.
+ #   search_fields = ['appointID', 'appointDate', 'appointTime',]
+
 admin.site.register(MACHINE_VERIFICATIONS)
-admin.site.register(TREATMENTS)
+admin.site.register(TREATMENTS,TreatmentAdmin)
 admin.site.register(RUN_EVENTS)
 admin.site.register(RUN_VITALS)
 admin.site.register(RUNS)
